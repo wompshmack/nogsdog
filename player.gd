@@ -94,10 +94,10 @@ func _physics_process(delta):
 		if velocity.x > -stats.max_run_speed and velocity.x < stats.max_run_speed:
 			velocity.x += lr_input * 5
 			#Apply a speed limit here so it will only be checked if they were below the speed limit
-		if velocity.x > stats.max_run_speed:
-			velocity.x = stats.max_run_speed
-		if velocity.x < -stats.max_run_speed:
-			velocity.x = -stats.max_run_speed
+			if velocity.x > stats.max_run_speed:
+				velocity.x = stats.max_run_speed
+			if velocity.x < -stats.max_run_speed:
+				velocity.x = -stats.max_run_speed
 	if lr_input == 0:
 		if $AnimatedSprite2D.animation == "walk":
 			$AnimatedSprite2D.animation = "idle"
@@ -127,11 +127,11 @@ func _physics_process(delta):
 		var fireball_instance = new_fireball.instantiate()
 		print(fireball_instance)
 
-		fireball_instance.set_stats(2,20,self)
+		fireball_instance.set_stats(2,80,self)
 		
 		owner.add_child(fireball_instance)
-		print("fireball postion: ",fireball_instance.position)
-		print("player postion: ",self.position)
+
+		
 	#We're going to get velocity modifiers before we move, and remove them afterwards, so they don't stack.
 	get_velocity_mods()
 	

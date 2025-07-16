@@ -7,6 +7,10 @@ var direction = 1
 	
 func _process(delta: float) -> void:
 	position.x += speed * direction * delta
+	if duration < 0:
+		queue_free()
+	if duration > 0:
+		duration -= delta
 	
 func set_stats(dur,spe,cre):
 	duration = dur
