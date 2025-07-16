@@ -8,7 +8,6 @@ var facing = 0
 
 #This is part of the conveyor stuff
 var preserved_momentum:Vector2
-var input_velocity:Vector2
 #This depends on the thing modifying our velocity having an Area2D which we're overlapping, because it looks for the parent of that area. 
 #This is probably fine, because I can't imagine how else it would happen, but if it needs to we can simply add an additional if statement
 #to check for the method, if not found check for the method on parent.
@@ -39,7 +38,7 @@ func get_velocity_mods():
 	velocity = total_modifier + velocity
 	if number_of_velocity_mods == 0:
 		velocity = preserved_momentum + velocity
-	print("current velocity: ", velocity)
+	#print("current velocity: ", velocity)
 	move_and_slide()
 	
 	velocity -= total_modifier
