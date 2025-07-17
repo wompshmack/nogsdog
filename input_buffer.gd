@@ -8,13 +8,13 @@ var delta_time = 0.0
 
 var player
 
-const BUFFER_TIME = 1.3
+const BUFFER_TIME = 1.5
 
 ###############
 #MOVES# #Eventually have these loaded from a file or something? idk.
 ##############
-var moves_dragonpunch = [6,5,2,3]
-var moves_fireball = [2,3,6]
+var moves_dragonpunch = [6,5,2,3,20]
+var moves_fireball = [2,3,6,20]
 var moves_dash = [5,6,5,6]
 
 func add_to_buffer(input):
@@ -43,7 +43,11 @@ func get_held_directions(delta,caller):
 	var right = Input.is_action_pressed("ui_right")
 	var up = Input.is_action_pressed("ui_up")
 	var down = Input.is_action_pressed("ui_down")
-
+	
+	var guard = Input.is_action_pressed("guard")
+	var punch = Input.is_action_pressed("punch")
+	var kick = Input.is_action_pressed("kick")
+	
 	# SOCD Scrubbing
 	if left and right:
 		left = false
@@ -54,9 +58,18 @@ func get_held_directions(delta,caller):
 	
 	# Convert to SF style notation.
 	# 7 8 9 #
-	# 4 5 6 #
-	# 1 2 3 #
-	if up:
+	# 4 5 6 #	G  P  K
+	# 1 2 3 #   15 20 25
+	
+	## I used these numbers for GPK so they could be added together to do compound button inputs. Might not end up using that
+	
+	if guard:
+		kp_dir = 15
+	elif punch:
+		kp_dir = 20
+	elif kick:
+		kp_dir = 25
+	elif up:
 		if left:
 			kp_dir = 7
 		elif right:
@@ -81,14 +94,17 @@ func get_held_directions(delta,caller):
 
 # TODO Something isn't right with timing and I keep getting moves registering overlapping each other.
 func show_me_your_moves():
-	if buffer.size() >= 4:
+	if buffer.size() >= 5:
+		var last5 = [buffer[-5],buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		var last4 = [buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
-		var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
-		if last4 == moves_dragonpunch:
+		#var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
+		if last5 == moves_dragonpunch:
 			print("dragonpunch")
-		if last3 == moves_fireball:
+		if last4 == moves_fireball:
 			print("fireball")
+			player.fireball()
+			buffer.clear()
 		if last4 == moves_dash:
 			print("dash!")
 			player.dash()
-			
+			buffer.clear()
