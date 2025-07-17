@@ -31,7 +31,7 @@ func update_healthbar():
 	var healthbar_size_vector = Vector2(percent_health * 50,7)
 	healthbar_fg.set_size(healthbar_size_vector)
 	print(healthbar_fg)
-
+	
 	
 func death():
 	queue_free()

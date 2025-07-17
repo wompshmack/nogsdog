@@ -5,6 +5,7 @@ var poison
 #player variables
 var stats
 var facing = 0
+var input_buffer
 
 #This is part of the conveyor stuff
 var preserved_momentum:Vector2
@@ -19,16 +20,14 @@ func get_velocity_mods():
 	var potential_velocity_modifiers = $feets.get_overlapping_areas()
 	
 	for thing in potential_velocity_modifiers:
-		#print(thing)
 		var things_parent = thing.get_parent()
 		if things_parent.has_method("CalculateVelocityModifier"):
-			#print("has method!")
 			number_of_velocity_mods += 1
 			var modifier = things_parent.CalculateVelocityModifier()
 			#Check if the character is on multiple conveyors at the same time, so the modifier won't be cumulative
 			if things_parent.has_method("IsConveyor") and conveyor == 0:
 				conveyor = 1
-				total_modifier += modifier #TODO figure out wtf this is about
+				total_modifier += modifier
 			elif things_parent.has_method("IsConveyor") and conveyor == 1:
 				pass
 			else:
@@ -64,6 +63,7 @@ func death():
 func _ready() -> void:
 
 	stats = Stats.new()
+	input_buffer = InputBuffer.new()
 	#TEST this is a test of poison, so the character just starts out poisoned
 	poison = load("res://objects/status_effects/status_poison.gd").new()
 	add_child(poison)
@@ -129,6 +129,8 @@ func _physics_process(delta):
 		fireball_instance.set_stats(2,80,self)
 		
 		owner.add_child(fireball_instance)
+	if input_buffer:
+		input_buffer.get_held_directions()
 
 		
 	#We're going to get velocity modifiers before we move, and remove them afterwards, so they don't stack.
