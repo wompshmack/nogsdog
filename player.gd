@@ -6,6 +6,7 @@ var poison
 var stats
 var facing = 0
 var input_buffer
+var dashing = 1
 
 #This is part of the conveyor stuff
 var preserved_momentum:Vector2
@@ -60,6 +61,9 @@ func death():
 	print("you died")
 	queue_free()
 
+func dash():
+	dashing += stats.dash_mod 
+
 func _ready() -> void:
 
 	stats = Stats.new()
@@ -68,7 +72,7 @@ func _ready() -> void:
 	poison = load("res://objects/status_effects/status_poison.gd").new()
 	add_child(poison)
 
-func _physics_process(delta):
+func _physics_process(delta): #TODO Move everything we can into _process instead of physics to save flops
 	if not is_on_floor() and velocity.y < GRAVITY:
 		velocity.y += GRAVITY * delta  # Apply gravity only when not grounded
 
@@ -84,22 +88,29 @@ func _physics_process(delta):
 		if $AnimatedSprite2D.animation == "idle":
 			$AnimatedSprite2D.animation = "walk"
 		
+		
 		if lr_input < 0:
 			$AnimatedSprite2D.flip_h = 1
 			facing = 1
 		if lr_input > 0:
 			$AnimatedSprite2D.flip_h = 0
 			facing = 0
-		if velocity.x > -stats.max_run_speed and velocity.x < stats.max_run_speed:
+		if velocity.x > -stats.max_run_speed * dashing and velocity.x < stats.max_run_speed * dashing:
 			velocity.x += lr_input * 5
 			#Apply a speed limit here so it will only be checked if they were below the speed limit
-			if velocity.x > stats.max_run_speed:
-				velocity.x = stats.max_run_speed
-			if velocity.x < -stats.max_run_speed:
-				velocity.x = -stats.max_run_speed
+			if velocity.x > stats.max_run_speed * dashing:
+				velocity.x = stats.max_run_speed * dashing
+			if velocity.x < -stats.max_run_speed * dashing:
+				velocity.x = -stats.max_run_speed * dashing
 	if lr_input == 0:
 		if $AnimatedSprite2D.animation == "walk":
 			$AnimatedSprite2D.animation = "idle"
+		dashing = 1
+		
+	#Remove dash if you move slower than your normal move speed
+	if dashing > 1:
+		if velocity.x > -stats.max_run_speed * 0.5 and velocity.x < stats.max_run_speed * 0.5:
+			dashing = 1
 		
 	#Decay of momentum
 	if velocity.x > 0 and lr_input < 1:
@@ -130,7 +141,7 @@ func _physics_process(delta):
 		
 		owner.add_child(fireball_instance)
 	if input_buffer:
-		input_buffer.get_held_directions()
+		input_buffer.get_held_directions(delta,self)
 
 		
 	#We're going to get velocity modifiers before we move, and remove them afterwards, so they don't stack.
