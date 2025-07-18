@@ -95,7 +95,7 @@ func get_held_directions(delta,caller):
 # TODO Something isn't right with timing and I keep getting moves registering overlapping each other.
 func show_me_your_moves():
 	if buffer.size() >= 5:
-		var last5 = [buffer[-5],buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
+		var last5 = [buffer[-5].input,buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		var last4 = [buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		#var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		if last5 == moves_dragonpunch:
