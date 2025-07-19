@@ -99,9 +99,9 @@ func show_me_your_moves():
 		var last4 = [buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		#var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		if last5 == moves_dragonpunch:
-			print("dragonpunch")
+			player.dragonpunch()
+			buffer.clear()
 		if last4 == moves_fireball:
-			print("fireball")
 			player.fireball()
 			buffer.clear()
 		if last4 == moves_dash:

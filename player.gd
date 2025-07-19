@@ -84,7 +84,7 @@ func _physics_process(delta): #TODO Move everything we can into _process instead
 		velocity.y = JUMP_FORCE
 	# left right movement
 	var lr_input = Input.get_axis("ui_left","ui_right")
-	if lr_input != 0:
+	if lr_input != 0 and is_on_floor():
 		if $AnimatedSprite2D.animation == "idle":
 			$AnimatedSprite2D.animation = "walk"
 		
@@ -104,6 +104,8 @@ func _physics_process(delta): #TODO Move everything we can into _process instead
 				velocity.x = -stats.max_run_speed * dashing
 	if lr_input == 0:
 		if $AnimatedSprite2D.animation == "walk":
+			$AnimatedSprite2D.animation = "idle"
+		if is_on_floor():
 			$AnimatedSprite2D.animation = "idle"
 		dashing = 1
 		
@@ -147,3 +149,9 @@ func fireball():
 	fireball_instance.set_stats(2,80,self)
 	
 	owner.add_child(fireball_instance)
+func dragonpunch():
+	print("sure, you can.")
+	velocity.y = -200
+	$AnimatedSprite2D.animation = "dragonpunch"
+	$AnimatedSprite2D.stop()
+	$AnimatedSprite2D.play()
