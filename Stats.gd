@@ -1,5 +1,4 @@
 class_name Stats
-extends Node
 
 var max_health: float = 100
 var health: float = 100

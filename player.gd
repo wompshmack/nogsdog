@@ -84,10 +84,10 @@ func _physics_process(delta): #TODO Move everything we can into _process instead
 		velocity.y = JUMP_FORCE
 	# left right movement
 	var lr_input = Input.get_axis("ui_left","ui_right")
-	if lr_input != 0 and is_on_floor():
-		if $AnimatedSprite2D.animation == "idle":
-			$AnimatedSprite2D.animation = "walk"
-		
+	if lr_input != 0:
+		if is_on_floor():
+			if $AnimatedSprite2D.animation == "idle":
+				$AnimatedSprite2D.animation = "walk"
 		
 		if lr_input < 0:
 			$AnimatedSprite2D.flip_h = 1
