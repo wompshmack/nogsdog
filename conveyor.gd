@@ -1,10 +1,8 @@
 extends StaticBody2D
-var convey_space
 var convey_direction:Vector2
 var convey_speed
 
 func _ready() -> void:
-	convey_space = $Area2D
 	convey_direction.x = 1
 	#convey_direction.y = 0
 	convey_speed = 10

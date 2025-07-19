@@ -6,12 +6,9 @@ var healthbar_bg
 var healthbar_fg
 var healthbar
 
-
 func _ready():
 	stats = Stats.new()
-	create_healthbar()
-	
-	
+	create_healthbar()	
 
 func take_damage(amount):
 	stats.health -= amount
@@ -21,7 +18,7 @@ func take_damage(amount):
 	
 func create_healthbar():
 	var healthbar_script = load("res://objects/ui/healthbar.tscn")
-	var healthbar = healthbar_script.instantiate()
+	healthbar = healthbar_script.instantiate()
 	add_child(healthbar)
 	healthbar_fg = $"healthbar/healthbar_bg/healthbar_fg"
 	
@@ -31,7 +28,6 @@ func update_healthbar():
 	var healthbar_size_vector = Vector2(percent_health * 50,7)
 	healthbar_fg.set_size(healthbar_size_vector)
 	print(healthbar_fg)
-	
 	
 func death():
 	queue_free()

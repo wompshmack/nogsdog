@@ -21,6 +21,7 @@ func get_velocity_mods():
 	var potential_velocity_modifiers = $feets.get_overlapping_areas()
 	
 	for thing in potential_velocity_modifiers:
+		total_modifier = Vector2(0,0)
 		var things_parent = thing.get_parent()
 		if things_parent.has_method("CalculateVelocityModifier"):
 			number_of_velocity_mods += 1
