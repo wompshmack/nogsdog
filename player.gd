@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 const GRAVITY = 600
 const JUMP_FORCE = -300
@@ -6,7 +7,7 @@ var poison
 var stats
 var facing = 0
 var input_buffer
-var dashing = 1
+var state_machine
 
 #This is part of the conveyor stuff
 var preserved_momentum:Vector2
@@ -57,87 +58,33 @@ func take_damage(amount):
 	healthbar.set_size(healthbar_size_vector)
 	if stats.health <= 0:
 		death()
+
 #TODO obviously make this do something
 func death():
 	print("you died")
 	queue_free()
 
-func dash():
-	dashing += stats.dash_mod 
-
 func _ready() -> void:
 
 	stats = Stats.new()
 	input_buffer = InputBuffer.new()
-	#TEST this is a test of poison, so the character just starts out poisoned
-	poison = load("res://objects/status_effects/status_poison.gd").new()
-	add_child(poison)
-
+	take_damage(0) #Take 0 damage to line up the healthbar
+	print("ready")
+	state_machine = $StateMachine
+	print("State Machine:", state_machine)
+	
 func _physics_process(delta): #TODO Move everything we can into _process instead of physics to save flops
-	if not is_on_floor() and velocity.y < GRAVITY:
-		velocity.y += GRAVITY * delta  # Apply gravity only when not grounded
+	
+	state_machine.run_state(delta)
 
-	if is_on_floor():
-		velocity.y = 0
-
-	# very basic jump
-	if is_on_floor() and Input.is_action_just_pressed("jump"):
-		velocity.y = JUMP_FORCE
-	# left right movement
-	var lr_input = Input.get_axis("ui_left","ui_right")
-	if lr_input != 0:
-		if is_on_floor():
-			if $AnimatedSprite2D.animation == "idle":
-				$AnimatedSprite2D.animation = "walk"
-		
-		if lr_input < 0:
-			$AnimatedSprite2D.flip_h = 1
-			facing = 1
-		if lr_input > 0:
-			$AnimatedSprite2D.flip_h = 0
-			facing = 0
-		if velocity.x > -stats.max_run_speed * dashing and velocity.x < stats.max_run_speed * dashing:
-			velocity.x += lr_input * 5
-			#Apply a speed limit here so it will only be checked if they were below the speed limit
-			if velocity.x > stats.max_run_speed * dashing:
-				velocity.x = stats.max_run_speed * dashing
-			if velocity.x < -stats.max_run_speed * dashing:
-				velocity.x = -stats.max_run_speed * dashing
-	if lr_input == 0:
-		if $AnimatedSprite2D.animation == "walk":
-			$AnimatedSprite2D.animation = "idle"
-		if is_on_floor():
-			$AnimatedSprite2D.animation = "idle"
-		dashing = 1
-		
-	#Remove dash if you move slower than your normal move speed
-	if dashing > 1:
-		if velocity.x > -stats.max_run_speed * 0.5 and velocity.x < stats.max_run_speed * 0.5:
-			dashing = 1
-		
-	#Decay of momentum
-	if velocity.x > 0 and lr_input < 1:
-		velocity.x -= 3
-		if velocity.x < 0:
-			velocity.x = 0
-	if velocity.x < 0 and lr_input > -1:
-		velocity.x += 3
-		if velocity.x > 0:
-			velocity.x = 0
-
-	#Run status effects
 	for child in get_children():
 		if child.has_method("CycleStatus"):
 			child.CycleStatus()
-
-	if Input.is_action_just_pressed("fireball"):
-		fireball()
-
 	
 	if input_buffer:
 		input_buffer.get_held_directions(delta,self)
-
-		
+	
+	#$StateMachine.run_state()
 	#We're going to get velocity modifiers before we move, and remove them afterwards, so they don't stack.
 	get_velocity_mods()
 	

@@ -1,0 +1,14 @@
+
+extends State
+class_name StateJump
+
+func enter(_data = null) -> void:
+	super(_data)
+	print("Entered jump state")
+	player.get_node("AnimatedSprite2D").animation = "idle" #TODO make a jump animation using the DP as a base
+	player.velocity.y += player.JUMP_FORCE #Try to remember that jump force is a negative value so we DO want to increment this when we use it. 
+func update(delta):
+	print(player.velocity.y)
+	player.velocity.y += 3
+	if player.velocity.y > 0:
+		state_machine.change_state("StateIdle")

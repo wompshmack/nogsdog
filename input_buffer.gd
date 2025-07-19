@@ -104,7 +104,7 @@ func show_me_your_moves():
 		if last4 == moves_fireball:
 			player.fireball()
 			buffer.clear()
-		if last4 == moves_dash:
-			print("dash!")
-			player.dash()
-			buffer.clear()
+		#if last4 == moves_dash:
+			#print("dash!")
+			#player.dash()
+			#buffer.clear()
