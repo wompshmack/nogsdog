@@ -10,6 +10,10 @@ func update(delta):
 	
 	#TODO timer do eventually do a "bored" animation or something
 	
+	horizontal_input()
+	# If grounded and moving switch to run state
+	if player.velocity.x != 0 and player.is_on_floor():
+		state_machine.change_state("StateRun")
 	if not player.is_on_floor():
 		state_machine.change_state("StateFall")
 	#TODO if jump switch to jump state

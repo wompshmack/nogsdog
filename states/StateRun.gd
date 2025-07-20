@@ -1,15 +1,33 @@
 extends State
 class_name StateRun
-var machine = self.get_parent()
+var percent_of_max_speed
+
+
 func enter(_data = null) -> void:
-	player.play_animation("run") #probably need some tree stuff to find the animation node
-
+	#Sprite stuff
+	player.sprite.animation = "run"
+	player.sprite.play()
+	print("Entered run state")
 func update(delta):
+	
+	horizontal_input()
+	#Change animation speed to match velocity
+	mod_sprite_speed()
 		
-	
-	#TODO if jump switch to jump state
+	#if jump switch to jump state
 	if Input.is_action_just_pressed("jump"):
-		machine.change_state("jump")
-	
+		state_machine.change_state("StateJump")
+		return
+	# if we walk off an edge start falling, the check for jump makes jumping not transition to falling instantly 
+	if not Input.is_action_just_pressed("jump") and not player.is_on_floor():
+		state_machine.change_state("StateFall")
+	# If we don't have horizontal momentum switch to idle
+	if player.velocity.x == 0:
+		state_machine.change_state("StateIdle")
 
-	#TODO if l/r input switch to run state
+func mod_sprite_speed():
+	if player.velocity.x > 0:
+		percent_of_max_speed =  player.velocity.x / player.stats.max_run_speed
+	if player.velocity.x < 0:
+		percent_of_max_speed = player.velocity.x / -player.stats.max_run_speed
+	player.sprite.speed_scale = percent_of_max_speed

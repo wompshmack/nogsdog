@@ -479,7 +479,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ma08v")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"run",
 "speed": 30.0
 }]
 
@@ -1023,10 +1023,8 @@ debug_color = Color(0, 0.6, 0.69803923, 1)
 position = Vector2(-6.999998, 1.9999999)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_d2bti")
-animation = &"dragonpunch"
+animation = &"run"
 autoplay = "idle"
-frame = 19
-frame_progress = 1.0
 
 [node name="feets" type="Area2D" parent="player"]
 

@@ -2,12 +2,12 @@ class_name Player
 extends CharacterBody2D
 const GRAVITY = 600
 const JUMP_FORCE = -300
-var poison
-#player variables
-var stats
+var stats: Stats
 var facing = 0
 var input_buffer
 var state_machine
+var sprite
+
 
 #This is part of the conveyor stuff
 var preserved_momentum:Vector2
@@ -20,6 +20,7 @@ func get_velocity_mods():
 	var conveyor = 0
 	var total_modifier:Vector2
 	var potential_velocity_modifiers = $feets.get_overlapping_areas()
+
 	
 	for thing in potential_velocity_modifiers:
 		total_modifier = Vector2(0,0)
@@ -36,7 +37,7 @@ func get_velocity_mods():
 			else:
 				total_modifier += modifier
 
-	#print(total_modifier)
+	print(total_modifier)
 	velocity = total_modifier + velocity
 	if number_of_velocity_mods == 0:
 		velocity = preserved_momentum + velocity
@@ -49,8 +50,7 @@ func get_velocity_mods():
 	
 func take_damage(amount):
 	stats.health -= amount
-
-	
+	#We could probably modularize the healthbar setup like we do for enemies
 	var percent_health = (stats.health / stats.max_health)
 	#print("percent health :", percent_health)
 	var healthbar_size_vector = Vector2(percent_health * 50,7)
@@ -72,6 +72,7 @@ func _ready() -> void:
 	print("ready")
 	state_machine = $StateMachine
 	print("State Machine:", state_machine)
+	sprite = $AnimatedSprite2D
 	
 func _physics_process(delta): #TODO Move everything we can into _process instead of physics to save flops
 	
@@ -84,7 +85,6 @@ func _physics_process(delta): #TODO Move everything we can into _process instead
 	if input_buffer:
 		input_buffer.get_held_directions(delta,self)
 	
-	#$StateMachine.run_state()
 	#We're going to get velocity modifiers before we move, and remove them afterwards, so they don't stack.
 	get_velocity_mods()
 	
