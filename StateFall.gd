@@ -2,7 +2,7 @@ extends State
 class_name StateFall
 
 func enter(_data = null) -> void:
-	player.get_node("AnimatedSprite2D").animation = "idle" #TODO make a fall animation
+	player.sprite.animation = "idle" #TODO make a fall animation
 	print("Entered falling state")
 
 func update(delta):

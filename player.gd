@@ -37,7 +37,6 @@ func get_velocity_mods():
 			else:
 				total_modifier += modifier
 
-	print(total_modifier)
 	velocity = total_modifier + velocity
 	if number_of_velocity_mods == 0:
 		velocity = preserved_momentum + velocity

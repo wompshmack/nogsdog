@@ -24,6 +24,11 @@ func update(delta):
 	# If we don't have horizontal momentum switch to idle
 	if player.velocity.x == 0:
 		state_machine.change_state("StateIdle")
+	if Input.is_action_pressed("block") and player.is_on_floor():
+		state_machine.change_state("StateBlock")
+	
+func exit():
+		player.sprite.speed_scale = 1
 
 func mod_sprite_speed():
 	if player.velocity.x > 0:
