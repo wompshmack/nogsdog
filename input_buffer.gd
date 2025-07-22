@@ -44,7 +44,7 @@ func get_held_directions(delta,caller):
 	var up = Input.is_action_pressed("ui_up")
 	var down = Input.is_action_pressed("ui_down")
 	
-	var guard = Input.is_action_pressed("guard")
+	var guard = Input.is_action_pressed("block")
 	var punch = Input.is_action_pressed("punch")
 	var kick = Input.is_action_pressed("kick")
 	

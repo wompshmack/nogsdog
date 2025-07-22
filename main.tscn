@@ -1186,7 +1186,7 @@ scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_d2bti")
 animation = &"block"
 autoplay = "block"
-frame_progress = 0.41373476
+frame_progress = 0.68826544
 
 [node name="feets" type="Area2D" parent="player"]
 
