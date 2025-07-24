@@ -4,7 +4,7 @@ class_name StateMachine
 var current_state
 var player
 
-func _ready() -> void:
+func startup() -> void:
 	player = get_parent()
 	for state in get_children():
 		state.state_machine = self

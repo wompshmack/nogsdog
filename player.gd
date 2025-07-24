@@ -69,9 +69,12 @@ func _ready() -> void:
 	input_buffer = InputBuffer.new()
 	take_damage(0) #Take 0 damage to line up the healthbar
 	print("ready")
-	state_machine = $StateMachine
-	print("State Machine:", state_machine)
 	sprite = $AnimatedSprite2D
+	
+	state_machine = $StateMachine
+	state_machine.startup()
+	print("State Machine:", state_machine)
+	
 	
 func _physics_process(delta): #TODO Move everything we can into _process instead of physics to save flops
 	

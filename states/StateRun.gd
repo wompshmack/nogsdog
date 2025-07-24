@@ -26,6 +26,9 @@ func update(delta):
 		state_machine.change_state("StateIdle")
 	if Input.is_action_pressed("block") and player.is_on_floor():
 		state_machine.change_state("StateBlock")
+		
+	if Input.is_action_just_pressed("kick") and player.is_on_floor():
+		state_machine.change_state("StateNormalKick")	
 	
 func exit():
 		player.sprite.speed_scale = 1

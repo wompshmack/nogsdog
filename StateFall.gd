@@ -7,13 +7,12 @@ func enter(_data = null) -> void:
 
 func update(delta):
 	
-	#Check if we hit the ground 
+	#Check if we hit the ground
 	if player.is_on_floor():
 		state_machine.change_state("StateIdle")
 		#if player.is_on_floor() and player.velocity.x != 0:
 			#state_machine.change_state("StateRun")
-				
-		
+	
 	horizontal_input()
 	
 	#terminal velocity

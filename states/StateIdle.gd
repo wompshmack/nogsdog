@@ -4,7 +4,10 @@ class_name StateIdle
 func enter(_data = null) -> void:
 	super(_data)
 	print("Entered idle state")
-	player.get_node("AnimatedSprite2D").animation = "idle" #probably need some tree stuff to find the animation node
+	print("Player: ", player)
+	print("Sprite: ", player.sprite)
+	player.sprite.animation = "idle"
+	 #probably need some tree stuff to find the animation node
 
 func update(delta):
 	
@@ -23,5 +26,7 @@ func update(delta):
 
 	if Input.is_action_pressed("block") and player.is_on_floor():
 		state_machine.change_state("StateBlock")
+
+	if Input.is_action_just_pressed("kick") and player.is_on_floor():
+		state_machine.change_state("StateNormalKick")	
 	
-	#TODO if l/r input switch to run state
