@@ -14,3 +14,6 @@ func update(delta):
 	if player.velocity.y > 0:
 		player.velocity.y = 0
 		state_machine.change_state("StateIdle")
+
+func special():
+	pass

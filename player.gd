@@ -90,18 +90,3 @@ func _physics_process(delta): #TODO Move everything we can into _process instead
 	#We're going to get velocity modifiers before we move, and remove them afterwards, so they don't stack.
 	get_velocity_mods()
 	
-func fireball():
-	print("pew pew")
-	var new_fireball = load("res://objects/projectiles/fireball.tscn")
-	var fireball_instance = new_fireball.instantiate()
-	print(fireball_instance)
-
-	fireball_instance.set_stats(2,80,self)
-	
-	owner.add_child(fireball_instance)
-func dragonpunch():
-	print("sure, you can.")
-	velocity.y = -200
-	$AnimatedSprite2D.animation = "dragonpunch"
-	$AnimatedSprite2D.stop()
-	$AnimatedSprite2D.play()

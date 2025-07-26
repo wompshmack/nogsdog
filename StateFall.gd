@@ -20,3 +20,6 @@ func update(delta):
 		player.velocity.y += player.GRAVITY * delta
 		if player.velocity.y > player.GRAVITY:
 			player.velocity.y = player.GRAVITY
+
+func special():
+	pass

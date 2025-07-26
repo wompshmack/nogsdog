@@ -30,6 +30,9 @@ func update(delta):
 	if Input.is_action_just_pressed("kick") and player.is_on_floor():
 		state_machine.change_state("StateNormalKick")	
 	
+func special():
+	pass
+	
 func exit():
 		player.sprite.speed_scale = 1
 

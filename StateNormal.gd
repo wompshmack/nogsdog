@@ -30,5 +30,3 @@ func update(delta):
 		#Always set current frame to zero on exit
 		current_frame = 0
 	player.sprite.frame = current_frame
-
-	

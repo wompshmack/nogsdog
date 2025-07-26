@@ -22,3 +22,14 @@ func change_state(state):
 	current_state = new_state
 	current_state.enter()
 	
+func special(move):
+	if current_state.has_method("special"):
+		if move == "fireball":
+			change_state("StateSpecialFireball")
+		if move == "dragonpunch":
+			change_state("StateSpecialDragonpunch")
+
+func normal(move):
+	if current_state.has_method("normal"):
+		if Input.is_action_just_pressed("kick"):
+			change_state("StateNormalKick")

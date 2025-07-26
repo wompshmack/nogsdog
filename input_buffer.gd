@@ -59,16 +59,22 @@ func get_held_directions(delta,caller):
 	# Convert to SF style notation.
 	# 7 8 9 #
 	# 4 5 6 #	G  P  K
-	# 1 2 3 #   15 20 25
+	# 1 2 3 #   10 20 40
 	
 	## I used these numbers for GPK so they could be added together to do compound button inputs. Might not end up using that
-	
+	## K is 40 instead of 30 so no combination of things can ever add up to the same thing. 
 	if guard:
-		kp_dir = 15
+		kp_dir = 10
 	elif punch:
-		kp_dir = 20
+		##Good prototype of how this is supposed to work. TODO flesh this out for other combined inputs.
+		if right:
+			kp_dir = 26
+		if left:
+			kp_dir = 24
+		else:
+			kp_dir = 20
 	elif kick:
-		kp_dir = 25
+		kp_dir = 40
 	elif up:
 		if left:
 			kp_dir = 7
@@ -98,12 +104,16 @@ func show_me_your_moves():
 		var last4 = [buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		#var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		if last5 == moves_dragonpunch:
-			player.dragonpunch()
+			player.state_machine.special("dragonpunch")
 			buffer.clear()
 		if last4 == moves_fireball:
-			player.fireball()
+			player.state_machine.special("fireball")
 			buffer.clear()
 		#if last4 == moves_dash:
 			#print("dash!")
 			#player.dash()
 			#buffer.clear()
+			
+	#Normals
+	#Just put in normals after specials so specials should take priority
+		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=4 uid="uid://cas4xwppptdh3"]
+[gd_scene load_steps=141 format=4 uid="uid://cas4xwppptdh3"]
 
 [ext_resource type="Script" uid="uid://bunhtxtyir0e2" path="res://player.gd" id="1_5vw27"]
 [ext_resource type="Texture2D" uid="uid://dhuhng61pdgxq" path="res://sprites/moosh/moosh_idle.png" id="2_5vw27"]
@@ -17,6 +17,8 @@
 [ext_resource type="Script" uid="uid://cbudgpe0qopp6" path="res://StateJump.gd" id="9_ycdy4"]
 [ext_resource type="Script" uid="uid://dqbsge4jn5dls" path="res://StateBlock.gd" id="10_w48qg"]
 [ext_resource type="Script" uid="uid://cps7aa2uo118n" path="res://StateNormalKick.gd" id="13_yaehf"]
+[ext_resource type="Script" uid="uid://f1xi86p76vc" path="res://StateSpecialDragonpunch.gd" id="14_074og"]
+[ext_resource type="Script" uid="uid://6wl2dwnqu7ml" path="res://StateSpecialFireball.gd" id="15_cegan"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y32ns"]
 size = Vector2(24, 26)
@@ -1390,6 +1392,14 @@ position = Vector2(635, 305)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player/StateMachine/StateNormalKick/Area2D"]
 shape = SubResource("RectangleShape2D_yaehf")
+
+[node name="StateSpecialDragonpunch" type="Node" parent="player/StateMachine"]
+script = ExtResource("14_074og")
+metadata/_custom_type_script = "uid://f1xi86p76vc"
+
+[node name="StateSpecialFireball" type="Node" parent="player/StateMachine"]
+script = ExtResource("15_cegan")
+metadata/_custom_type_script = "uid://6wl2dwnqu7ml"
 
 [node name="TileMap" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAASACIAAAACAAIAAAATACIAAAADAAIAAAAUACIAAAADAAIAAAAVACIAAAADAAIAAAAWACIAAAADAAIAAAAXACIAAAADAAIAAAAYACIAAAADAAIAAAAZACIAAAADAAIAAAAaACIAAAADAAIAAAAbACIAAAADAAIAAAAcACIAAAADAAIAAAAdACIAAAADAAIAAAAeACIAAAADAAIAAAAfACIAAAADAAIAAAAgACIAAAADAAIAAAAhACIAAAADAAIAAAAiACIAAAADAAIAAAAjACIAAAADAAIAAAAkACIAAAADAAIAAAAlACIAAAADAAIAAAAmACIAAAADAAIAAAAnACIAAAADAAIAAAAoACIAAAADAAIAAAApACIAAAADAAIAAAAqACIAAAADAAIAAAArACIAAAADAAIAAAAsACIAAAADAAIAAAAtACIAAAADAAIAAAAuACIAAAADAAIAAAAvACIAAAADAAIAAAAwACIAAAADAAIAAAAxACIAAAADAAIAAAAyACIAAAADAAIAAAAzACIAAAAHAAIAAAAaAB8AAAALAAIAAAAaACAAAAALAAMAAAAaACEAAAALAAMAAAAZAB8AAAAKAAIAAAAZACAAAAAKAAMAAAAZACEAAAAKAAMAAAAYAB4AAAAHAAIAAAAYAB0AAAAHAAIAAAAYABwAAAAHAAIAAAAXABsAAAAHAAIAAAAXABoAAAAHAAIAAAAXABkAAAAHAAIAAAAWABgAAAAHAAIAAAAWABcAAAAHAAIAAAAWABYAAAAHAAIAAAAVABUAAAAHAAIAAAAVABQAAAAHAAIAAAAVABMAAAAHAAIAAAAUABIAAAAHAAIAAAAUABEAAAAHAAIAAAAUABAAAAAHAAIAAAATABAAAAAHAAIAAAASAA8AAAAHAAIAAAARAA4AAAAHAAIAAAAQAA0AAAAHAAIAAAAPAAwAAAAHAAIAAAAOAAsAAAAHAAIAAAANAAoAAAAHAAIAAAAMAAkAAAAHAAIAAAALAAgAAAAHAAIAAAAJAAcAAAAHAAIAAAAKAAcAAAAHAAIAAAAIAAcAAAAHAAIAAAAHAAYAAAAHAAIAAAAGAAYAAAAHAAIAAAAFAAYAAAAHAAIAAAAEAAYAAAAHAAIAAAACAAYAAAAHAAIAAAADAAYAAAAHAAIAAAABAAUAAAAHAAIAAAAAAAUAAAAHAAIAAAAAAAQAAAAHAAIAAAD//wQAAAAHAAIAAAD+/wQAAAAHAAIAAAD+/wMAAAAHAAIAAAD9/wMAAAAHAAIAAAA=")
