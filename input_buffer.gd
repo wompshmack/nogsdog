@@ -8,7 +8,7 @@ var delta_time = 0.0
 
 var player
 
-const BUFFER_TIME = 1.5
+const BUFFER_TIME = 1.0
 
 ###############
 #MOVES# #Eventually have these loaded from a file or something? idk.
@@ -32,7 +32,7 @@ func buffer_cleanup():
 		direction["time"] -= delta_time
 		if direction["time"] < 0:
 			buffer.erase(direction)
-			print(buffer)
+			#print(buffer)
 	show_me_your_moves()
 
 func get_held_directions(delta,caller):
@@ -104,7 +104,7 @@ func show_me_your_moves():
 		var last4 = [buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		#var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		for sequence in moves.dragonpunch:
-			print(sequence)
+			#print(sequence)
 			if sequence == last5 or sequence == last4:
 				player.state_machine.special("dragonpunch")
 				buffer.clear()
