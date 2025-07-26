@@ -20,14 +20,15 @@ func update(delta):
 
 	if not player.is_on_floor():
 		state_machine.change_state("StateFall")
-		
+	# TODO These should eventually be moved to the State class
 	if player.is_on_floor() and Input.is_action_just_pressed("jump"):
 		state_machine.change_state("StateJump")
 
 	if Input.is_action_pressed("block") and player.is_on_floor():
 		state_machine.change_state("StateBlock")
 
-
+	if Input.is_action_just_pressed("kick") and player.is_on_floor():
+		state_machine.change_state("StateNormalKick")	
 		
 func special():
 	pass
