@@ -7,7 +7,7 @@ var sprite_offset = Vector2(0,0)
 func enter(_data = null) -> void:
 	
 	
-	
+	#TODO Fireball comes out in the wrong spot
 	print("Hadoken (I don't have a joke for this)")
 	
 	
@@ -36,5 +36,5 @@ func fireball():
 	var fireball_instance = new_fireball.instantiate()
 	print(fireball_instance)
 	fireball_instance.set_stats(2,80,player)
-	player.add_child(fireball_instance)
+	owner.add_child(fireball_instance)
 	
