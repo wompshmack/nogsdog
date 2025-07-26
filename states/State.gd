@@ -41,5 +41,7 @@ func decay_momentum(lr_input):
 func sprite_flip(lr_input):
 	if lr_input > 0:
 		player.sprite.flip_h = 0
+		player.facing = 0
 	if lr_input < 0:
 		player.sprite.flip_h = 1
+		player.facing = 1

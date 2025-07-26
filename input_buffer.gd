@@ -13,9 +13,12 @@ const BUFFER_TIME = 1.5
 ###############
 #MOVES# #Eventually have these loaded from a file or something? idk.
 ##############
-var moves_dragonpunch = [6,5,2,3,20]
-var moves_fireball = [2,3,6,20]
-var moves_dash = [5,6,5,6]
+var moves := {
+	"dragonpunch" : [[4,5,2,1,20],[6,5,2,3,20],[6,5,2,23],[5,2,5,2]],
+	"fireball" : [[2,3,6,20],[2,1,4,20]],
+	"dash" : [5,6,5,6]
+}
+
 
 func add_to_buffer(input):
 	if input != previous_buffer_input:
@@ -63,19 +66,8 @@ func get_held_directions(delta,caller):
 	
 	## I used these numbers for GPK so they could be added together to do compound button inputs. Might not end up using that
 	## K is 40 instead of 30 so no combination of things can ever add up to the same thing. 
-	if guard:
-		kp_dir = 10
-	elif punch:
-		##Good prototype of how this is supposed to work. TODO flesh this out for other combined inputs.
-		if right:
-			kp_dir = 26
-		if left:
-			kp_dir = 24
-		else:
-			kp_dir = 20
-	elif kick:
-		kp_dir = 40
-	elif up:
+
+	if up:
 		if left:
 			kp_dir = 7
 		elif right:
@@ -96,6 +88,14 @@ func get_held_directions(delta,caller):
 	else:
 		kp_dir = 5
 	
+	if guard:
+		kp_dir =+ 10
+	if punch:
+		kp_dir =+ 20
+	if kick:
+		kp_dir =+ 40
+	
+	
 	add_to_buffer(kp_dir)
 
 func show_me_your_moves():
@@ -103,12 +103,15 @@ func show_me_your_moves():
 		var last5 = [buffer[-5].input,buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		var last4 = [buffer[-4].input,buffer[-3].input, buffer[-2].input, buffer[-1].input]
 		#var last3 = [buffer[-3].input, buffer[-2].input, buffer[-1].input]
-		if last5 == moves_dragonpunch:
-			player.state_machine.special("dragonpunch")
-			buffer.clear()
-		if last4 == moves_fireball:
-			player.state_machine.special("fireball")
-			buffer.clear()
+		for sequence in moves.dragonpunch:
+			print(sequence)
+			if sequence == last5 or sequence == last4:
+				player.state_machine.special("dragonpunch")
+				buffer.clear()
+		for sequence in moves.fireball:
+			if sequence == last5 or sequence == last4:
+				player.state_machine.special("fireball")
+				buffer.clear()
 		#if last4 == moves_dash:
 			#print("dash!")
 			#player.dash()
