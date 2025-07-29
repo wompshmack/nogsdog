@@ -7,10 +7,17 @@ var post_lag = 0
 var hit_frame = 0
 var total_frames = 0
 var current_frame = 0
+var energy_cost
 
 func enter(_data = null) -> void:
 	super(_data)
 	print("Check me out Stevie Imma try something")
+	#Now check if we have enough energy for this move
+	if player.stats.current_energy < energy_cost:
+		state_machine.change_state("StateIdle")
+	else:
+		player.stats.current_energy -= energy_cost
+		
 	total_frames = pre_lag + post_lag + hit_frame
 
 func update(delta):

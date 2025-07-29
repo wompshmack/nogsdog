@@ -10,11 +10,11 @@ func enter(_data = null) -> void:
 	#TODO Fireball comes out in the wrong spot
 	print("Hadoken (I don't have a joke for this)")
 	
-	
 	#Make some kind of file for moves that it loads this data from. Hardcoded values are ugly.
 	pre_lag = 12
 	hit_frame = 1
 	post_lag = 7
+	energy_cost = 70
 	#Use super AFTER defining the frames to determine total frames
 	super(_data)
 
@@ -29,7 +29,6 @@ func update(delta):
 func exit():
 		player.sprite.offset = Vector2(0,0)
 		
-
 func fireball():
 	print("pew pew")
 	var new_fireball = load("res://objects/projectiles/fireball.tscn")
