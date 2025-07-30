@@ -30,5 +30,8 @@ func update(delta):
 	if Input.is_action_just_pressed("kick") and player.is_on_floor():
 		state_machine.change_state("StateNormalKick")	
 		
+	if Input.is_action_just_pressed("torch"):
+		player.torch_toggle()
+		
 func special():
 	pass

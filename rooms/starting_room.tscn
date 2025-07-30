@@ -916,4 +916,7 @@ offset_top = 411.0
 offset_right = 326.0
 offset_bottom = 424.0
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.07683582, 0.07683582, 0.07683582, 1)
+
 [connection signal="body_entered" from="exit" to="exit" method="_on_body_entered"]

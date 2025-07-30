@@ -9,6 +9,8 @@ var state_machine
 var sprite
 var healthbar
 var energybar
+var torch
+
 
 #This is part of the conveyor stuff
 var preserved_momentum:Vector2
@@ -65,6 +67,8 @@ func _ready() -> void:
 	state_machine.startup()
 	print("State Machine:", state_machine)
 	
+	torch = $torch
+	
 	
 func _physics_process(delta): #TODO Move everything we can into _process instead of physics to save flops
 	
@@ -103,3 +107,12 @@ func teleport(newcoords):
 	print("Player position before teleport", position)
 	position = newcoords
 	print("Player position after teleport", position)
+	
+func torch_toggle():
+	if torch:
+		if torch.visible == true:
+			torch.visible = false
+		elif torch.visible == false:
+			torch.visible = true
+			
+			
